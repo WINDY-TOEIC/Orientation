@@ -3,27 +3,23 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Unit 0: Orientation - PH Windy TOEIC</title>
-  <!-- Tailwind CSS -->
+  <title>Unit 0: Orientation | PH Windy TOEIC</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css2?family=Be+Vietnam+Pro:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
 
   <script>
     tailwind.config = {
       theme: {
         extend: {
           fontFamily: {
-            sans: ['"Be Vietnam Pro"', 'sans-serif'],
+            sans: ['"Inter"', 'sans-serif'],
           },
           colors: {
-            brand: {
-              light: '#bce3e4',
-              DEFAULT: '#33888d',
-              dark: '#236468',
-              accent: '#f97316'
+            tealbrand: {
+              bg: '#bfe3e4',
+              DEFAULT: '#34898d',
+              dark: '#236467',
             }
           }
         }
@@ -33,335 +29,225 @@
 
   <style>
     body {
-      background-color: #bce3e4;
-      overflow-x: hidden;
+      background-color: #bfe3e4;
       user-select: none;
     }
-    /* Chế độ chỉnh sửa */
     body.edit-mode {
       user-select: text;
     }
     body.edit-mode .editable {
-      outline: 2px dashed #f97316;
-      outline-offset: 4px;
-      border-radius: 4px;
+      outline: 1.5px dashed #0284c7;
+      outline-offset: 3px;
+      background-color: #f0f9ff;
       cursor: text;
-      background-color: rgba(254, 243, 199, 0.35);
-      transition: all 0.2s;
     }
     body.edit-mode .editable:focus {
-      outline: 2px solid #ea580c;
-      background-color: rgba(254, 243, 199, 0.7);
+      outline: 2px solid #0369a1;
+      background-color: #e0f2fe;
     }
-    /* Hiệu ứng chuyển Slide */
     .slide {
       display: none;
-      animation: fadeIn 0.35s ease-out;
     }
     .slide.active {
       display: flex;
     }
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
+    /* Thanh tiêu đề vát góc chuẩn theo slide gốc */
+    .slide-ribbon {
+      background-color: #34898d;
+      clip-path: polygon(0% 0%, 91% 0%, 100% 50%, 91% 100%, 0% 100%);
     }
     /* Bút Laser */
     #laser-dot {
       position: fixed;
-      width: 18px;
-      height: 18px;
-      background: rgba(239, 68, 68, 0.9);
+      width: 14px;
+      height: 14px;
+      background: #dc2626;
       border-radius: 50%;
       pointer-events: none;
       z-index: 9999;
       transform: translate(-50%, -50%);
-      box-shadow: 0 0 12px 4px rgba(239, 68, 68, 0.75);
+      box-shadow: 0 0 10px 3px rgba(220, 38, 38, 0.8);
       display: none;
     }
-    /* Ruy băng tiêu đề giống slide gốc */
-    .ribbon-header {
-      background-color: #33888d;
-      clip-path: polygon(0% 0%, 92% 0%, 100% 50%, 92% 100%, 0% 100%);
+    /* Bảng điểm thu gọn sắc nét */
+    .score-table th, .score-table td {
+      padding: 1px 4px;
+      font-size: 11px;
+      line-height: 1.25;
+      border: 1px solid #cbd5e1;
+      text-align: center;
     }
-    /* Custom Scrollbar */
-    ::-webkit-scrollbar { width: 8px; height: 8px; }
-    ::-webkit-scrollbar-track { background: #f1f5f9; }
-    ::-webkit-scrollbar-thumb { background: #94a3b8; border-radius: 4px; }
+    .score-row {
+      cursor: pointer;
+    }
+    .score-row:hover {
+      background-color: #e2e8f0;
+    }
   </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between p-3 md:p-6">
+<body class="min-h-screen flex flex-col justify-between p-3 md:p-5 text-slate-900">
 
-  <!-- Chấm đỏ Laser -->
   <div id="laser-dot"></div>
 
-  <!-- Thanh điều hướng phía trên -->
-  <header class="max-w-6xl w-full mx-auto mb-3 flex flex-wrap items-center justify-between gap-2 bg-white/90 backdrop-blur px-4 py-2.5 rounded-xl shadow-sm">
-    <div class="flex items-center gap-3">
-      <div class="w-10 h-10 rounded-full bg-gradient-to-tr from-amber-800 to-orange-500 flex items-center justify-center text-white font-extrabold text-sm shadow">
+  <!-- THANH MENU TRÊN CÙNG -->
+  <header class="max-w-6xl w-full mx-auto mb-2.5 flex flex-wrap items-center justify-between gap-2 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200">
+    <div class="flex items-center gap-2.5">
+      <div class="w-8 h-8 rounded-full bg-slate-900 text-white font-extrabold text-xs flex items-center justify-center tracking-tighter border-2 border-orange-500">
         PH
       </div>
-      <div>
-        <span class="font-extrabold text-brand-dark tracking-tight text-sm md:text-base editable">WINDY TOEIC</span>
-        <span class="hidden sm:inline-block text-xs bg-brand/10 text-brand-dark font-semibold px-2 py-0.5 rounded ml-2 editable">Unit 0: Orientation</span>
-      </div>
+      <span class="font-bold text-slate-800 text-sm tracking-tight editable">WINDY TOEIC</span>
+      <span class="text-slate-300">|</span>
+      <span class="text-xs font-semibold text-tealbrand-dark editable">UNIT 0: ORIENTATION</span>
     </div>
 
-    <!-- Menu nhảy nhanh các Slide -->
-    <nav class="flex flex-wrap items-center gap-1 text-xs md:text-sm font-medium" id="slide-nav">
-      <button onclick="goToSlide(0)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">1. Mở đầu</button>
-      <button onclick="goToSlide(1)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">2. Giảng viên</button>
-      <button onclick="goToSlide(2)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">3. Lộ trình</button>
-      <button onclick="goToSlide(3)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">4. Đầu ra</button>
-      <button onclick="goToSlide(4)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">5. Nội quy</button>
-      <button onclick="goToSlide(5)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">6. Web luyện thi</button>
-      <button onclick="goToSlide(6)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">7. Cấu trúc đề</button>
-      <button onclick="goToSlide(7)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">8. Thang điểm</button>
-      <button onclick="goToSlide(8)" class="nav-btn px-2.5 py-1.5 rounded-lg transition">9. Kahoot!</button>
+    <nav class="flex flex-wrap items-center gap-1 text-xs font-semibold" id="slide-nav">
+      <button onclick="goToSlide(0)" class="nav-btn px-2.5 py-1 rounded transition">Unit 0</button>
+      <button onclick="goToSlide(1)" class="nav-btn px-2.5 py-1 rounded transition">1. Introduction</button>
+      <button onclick="goToSlide(2)" class="nav-btn px-2.5 py-1 rounded transition">2. Lộ trình</button>
+      <button onclick="goToSlide(3)" class="nav-btn px-2.5 py-1 rounded transition">3. Đầu ra</button>
+      <button onclick="goToSlide(4)" class="nav-btn px-2.5 py-1 rounded transition">4. Nội quy</button>
+      <button onclick="goToSlide(5)" class="nav-btn px-2.5 py-1 rounded transition">5. Website & Kahoot</button>
+      <button onclick="goToSlide(6)" class="nav-btn px-2.5 py-1 rounded transition">6. Cấu trúc đề</button>
+      <button onclick="goToSlide(7)" class="nav-btn px-2.5 py-1 rounded transition">7. Thang điểm</button>
     </nav>
   </header>
 
-  <!-- KHUNG TRÌNH CHIẾU CHÍNH -->
-  <main class="max-w-6xl w-full mx-auto flex-1 flex items-center justify-center my-1">
-    <div class="bg-white w-full min-h-[540px] md:min-h-[600px] rounded-2xl shadow-xl relative overflow-hidden flex flex-col justify-between p-6 md:p-12">
+  <!-- KHUNG SLIDE CHÍNH -->
+  <main class="max-w-6xl w-full mx-auto flex-1 flex items-center justify-center">
+    <div class="bg-white w-full min-h-[540px] md:min-h-[600px] shadow-md border border-slate-200 relative flex flex-col justify-between p-8 md:p-12">
 
       <!-- ==========================================
-           SLIDE 1: WELCOME & UNIT 0 ORIENTATION
+           SLIDE 1: UNIT 0 - ORIENTATION
            ========================================== -->
-      <section class="slide active flex-col items-center justify-center text-center h-full my-auto py-8">
-        <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-orange-100 text-orange-700 font-bold text-sm mb-6 editable">
-          <i class="fa-solid fa-sparkles"></i> Chào mừng các bạn đến với lớp học
-        </div>
-        <h1 class="text-5xl md:text-7xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-purple-600 to-brand-dark mb-4 py-2 editable">
-          WELCOME!
-        </h1>
-        <h2 class="text-3xl md:text-4xl font-extrabold text-pink-500 tracking-wide mt-2 editable">
-          UNIT 0: ORIENTATION
-        </h2>
-        <p class="text-slate-600 mt-4 max-w-xl text-base md:text-lg editable">
-          Buổi định hướng, làm quen và nắm vững lộ trình chinh phục mục tiêu TOEIC cùng PH Windy TOEIC.
-        </p>
+      <section class="slide active flex-col justify-center h-full my-auto">
+        <div class="grid md:grid-cols-12 gap-8 items-center">
+          <div class="md:col-span-6 space-y-4 border-l-8 border-tealbrand pl-6">
+            <div class="text-sm font-bold uppercase tracking-widest text-tealbrand editable">PH WINDY TOEIC</div>
+            <h1 class="text-5xl md:text-6xl font-extrabold text-slate-900 tracking-tight editable">UNIT 0</h1>
+            <h2 class="text-3xl md:text-4xl font-bold text-tealbrand-dark editable">Orientation</h2>
+          </div>
 
-        <div class="mt-10 grid grid-cols-2 sm:grid-cols-4 gap-4 w-full max-w-3xl text-left">
-          <div class="p-4 rounded-xl bg-teal-50 border border-teal-100">
-            <i class="fa-solid fa-user-graduate text-brand text-xl mb-2"></i>
-            <div class="font-bold text-slate-800 text-sm editable">1. Làm quen</div>
-            <div class="text-xs text-slate-500 editable">Giảng viên & Học viên</div>
-          </div>
-          <div class="p-4 rounded-xl bg-pink-50 border border-pink-100">
-            <i class="fa-solid fa-route text-pink-500 text-xl mb-2"></i>
-            <div class="font-bold text-slate-800 text-sm editable">2. Lộ trình học</div>
-            <div class="text-xs text-slate-500 editable">60 buổi (4.5 tháng)</div>
-          </div>
-          <div class="p-4 rounded-xl bg-amber-50 border border-amber-100">
-            <i class="fa-solid fa-clipboard-check text-amber-500 text-xl mb-2"></i>
-            <div class="font-bold text-slate-800 text-sm editable">3. Nội quy lớp</div>
-            <div class="text-xs text-slate-500 editable">Kỷ luật tạo sức mạnh</div>
-          </div>
-          <div class="p-4 rounded-xl bg-indigo-50 border border-indigo-100">
-            <i class="fa-solid fa-bullseye text-indigo-500 text-xl mb-2"></i>
-            <div class="font-bold text-slate-800 text-sm editable">4. Hiểu đề TOEIC</div>
-            <div class="text-xs text-slate-500 editable">Cấu trúc & Cách tính điểm</div>
+          <div class="md:col-span-6 bg-slate-50 border border-slate-200 p-6 rounded-lg space-y-3">
+            <div class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-2 editable">NỘI DUNG BUỔI HỌC</div>
+            <div class="text-base md:text-lg font-medium text-slate-800 space-y-2.5">
+              <div class="editable">1. Giới thiệu: Tên, trường, mục tiêu.</div>
+              <div class="editable">2. Lộ trình: 60 buổi (4.5 tháng)</div>
+              <div class="editable">3. Tham gia Google Classroom (email cá nhân)</div>
+              <div class="editable">4. Nội quy lớp học</div>
+              <div class="editable">5. Website học TOEIC & Cấu trúc đề thi</div>
+            </div>
           </div>
         </div>
       </section>
 
       <!-- ==========================================
-           SLIDE 2: GIỚI THIỆU GIẢNG VIÊN & HỌC VIÊN
+           SLIDE 2: 1. INTRODUCTION (GIẢNG VIÊN)
            ========================================== -->
       <section class="slide flex-col h-full justify-between">
-        <div class="ribbon-header w-72 md:w-96 py-2.5 px-6 text-white font-bold text-xl md:text-2xl -ml-6 md:-ml-12 mb-6 shadow">
+        <div class="slide-ribbon w-80 md:w-96 py-2.5 px-8 text-white font-bold text-2xl -ml-8 md:-ml-12 mb-6">
           <span class="editable">1. Introduction</span>
         </div>
 
-        <div class="grid md:grid-cols-12 gap-6 items-center my-auto">
-          <!-- Cột thông tin Giảng viên -->
-          <div class="md:col-span-5 bg-slate-50 p-5 rounded-2xl border border-slate-200 flex flex-col items-center text-center relative">
-            <div class="relative group">
-              <img id="teacher-img" src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=400&q=80" alt="Lê Hồng Thịnh" class="w-32 h-32 md:w-36 md:h-36 object-cover rounded-full border-4 border-brand shadow-md" />
-              <label class="edit-only hidden absolute inset-0 bg-black/60 text-white rounded-full flex-col items-center justify-center cursor-pointer text-xs font-semibold">
-                <i class="fa-solid fa-camera text-lg mb-1"></i> Đổi ảnh
-                <input type="file" accept="image/*" class="hidden" onchange="changeImage(event, 'teacher-img')" />
-              </label>
+        <div class="my-auto grid md:grid-cols-12 gap-8 items-center">
+          <!-- Khung Ảnh Giảng Viên (Hỗ trợ nạp đúng bức ảnh số 11 của bạn) -->
+          <div class="md:col-span-5 flex flex-col items-center">
+            <div onclick="document.getElementById('avatar-input').click()" class="w-60 h-72 rounded-lg border-2 border-slate-300 overflow-hidden bg-slate-100 relative cursor-pointer group shadow-sm" title="Bấm để chọn ảnh của bạn">
+              <img id="teacher-avatar" src="" alt="Lê Hồng Thịnh" class="w-full h-full object-cover hidden" style="object-position: 20% 35%;" />
+              <div id="avatar-placeholder" class="w-full h-full flex flex-col items-center justify-center p-4 text-center text-slate-500">
+                <i class="fa-solid fa-user-tie text-4xl mb-3 text-slate-400"></i>
+                <span class="font-bold text-sm text-slate-700">Bấm vào đây để chọn ảnh Giảng viên</span>
+                <span class="text-xs mt-1 text-slate-400">(Chọn bức ảnh ghép của bạn, hệ thống sẽ tự căn khung chân dung & tự lưu lại)</span>
+              </div>
+              <div class="absolute inset-0 bg-black/50 text-white opacity-0 group-hover:opacity-100 flex items-center justify-center text-xs font-semibold transition">
+                Đổi ảnh hiển thị
+              </div>
             </div>
+            <input id="avatar-input" type="file" accept="image/*" class="hidden" onchange="handleTeacherImage(event)" />
 
-            <h3 class="text-2xl font-extrabold text-slate-800 mt-3 editable">Lê Hồng Thịnh</h3>
-            <p class="text-sm text-brand font-semibold mb-4 editable">Giảng viên PH Windy TOEIC</p>
-
-            <!-- Chứng chỉ nổi bật -->
-            <div class="w-full space-y-2.5 text-left">
-              <div class="bg-amber-50 border border-amber-200 p-3 rounded-xl flex items-center justify-between">
-                <div>
-                  <span class="text-xs font-bold uppercase text-amber-700 block editable">ETS TOEIC Certificate</span>
-                  <span class="text-xs text-slate-600 editable">Listening: 495 | Reading: 495</span>
-                </div>
-                <span class="text-2xl font-black text-amber-600 bg-white px-3 py-1 rounded-lg border border-amber-200 shadow-sm editable">990</span>
-              </div>
-
-              <div class="bg-rose-50 border border-rose-200 p-3 rounded-xl flex items-center justify-between">
-                <div>
-                  <span class="text-xs font-bold uppercase text-rose-700 block editable">IELTS IDP Certificate</span>
-                  <span class="text-xs text-slate-600 editable">Speaking: 8.0 | CEFR: C1</span>
-                </div>
-                <span class="text-2xl font-black text-rose-600 bg-white px-3 py-1 rounded-lg border border-rose-200 shadow-sm editable">8.0</span>
-              </div>
+            <div class="flex gap-2 mt-2">
+              <button onclick="setCropMode('portrait')" class="text-xs px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded border text-slate-700 font-medium">Khung chân dung</button>
+              <button onclick="setCropMode('full')" class="text-xs px-2.5 py-1 bg-slate-100 hover:bg-slate-200 rounded border text-slate-700 font-medium">Hiện toàn bộ ảnh</button>
             </div>
           </div>
 
-          <!-- Cột Giao lưu Học viên & Group FB -->
+          <!-- Thông tin chứng chỉ & Group -->
           <div class="md:col-span-7 space-y-5">
-            <div class="bg-teal-50/70 border-l-4 border-brand p-5 rounded-r-2xl">
-              <h4 class="text-xl font-bold text-slate-800 mb-3 flex items-center gap-2">
-                <i class="fa-solid fa-comments text-brand"></i>
-                <span class="editable">1. Giới thiệu làm quen học viên</span>
-              </h4>
-              <p class="text-slate-700 text-base md:text-lg leading-relaxed editable">
-                Mỗi bạn bật mic giới thiệu ngắn gọn về bản thân nhé:
-              </p>
-              <ul class="mt-3 space-y-2 text-slate-800 font-medium text-base md:text-lg">
-                <li class="flex items-center gap-2.5">
-                  <i class="fa-solid fa-circle-check text-brand"></i>
-                  <span class="editable">Họ và tên của bạn?</span>
-                </li>
-                <li class="flex items-center gap-2.5">
-                  <i class="fa-solid fa-circle-check text-brand"></i>
-                  <span class="editable">Trường đang học / Công việc hiện tại?</span>
-                </li>
-                <li class="flex items-center gap-2.5">
-                  <i class="fa-solid fa-circle-check text-brand"></i>
-                  <span class="editable">Mục tiêu điểm TOEIC mong muốn?</span>
-                </li>
-              </ul>
+            <div class="border-b border-slate-200 pb-3">
+              <h3 class="text-3xl font-extrabold text-slate-900 editable">Lê Hồng Thịnh</h3>
+              <p class="text-sm font-semibold text-tealbrand-dark mt-1 editable">PH Windy TOEIC</p>
             </div>
 
-            <!-- Nút vào Group Facebook -->
-            <div class="bg-blue-50 border border-blue-200 p-5 rounded-2xl flex flex-col sm:flex-row items-center justify-between gap-4">
-              <div>
-                <div class="text-xs font-bold uppercase text-blue-600 tracking-wider editable">Cộng đồng học tập</div>
-                <div class="text-lg font-bold text-slate-800 editable">Tham gia Group Facebook Lớp Học</div>
-                <div class="text-xs text-slate-500 truncate max-w-xs editable">facebook.com/groups/1010922477249271</div>
+            <div class="grid sm:grid-cols-2 gap-4">
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                <div class="text-xs font-bold text-slate-400 uppercase editable">ETS TOEIC Official Score</div>
+                <div class="text-3xl font-extrabold text-slate-900 mt-1 editable">990 / 990</div>
+                <div class="text-xs font-medium text-slate-600 mt-1 editable">Listening: 495 | Reading: 495</div>
               </div>
-              <a href="https://www.facebook.com/groups/1010922477249271" target="_blank" class="shrink-0 bg-blue-600 hover:bg-blue-700 text-white font-bold px-5 py-3 rounded-xl shadow transition flex items-center gap-2">
-                <i class="fa-brands fa-facebook text-lg"></i> <span>Vào Group Ngay</span>
-              </a>
+
+              <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg">
+                <div class="text-xs font-bold text-slate-400 uppercase editable">IELTS (IDP)</div>
+                <div class="text-3xl font-extrabold text-slate-900 mt-1 editable">8.0 Overall</div>
+                <div class="text-xs font-medium text-slate-600 mt-1 editable">Speaking: 8.0 | CEFR Level: C1</div>
+              </div>
+            </div>
+
+            <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+              <div class="text-lg font-bold text-slate-900 editable">1. Giới thiệu: Tên, trường, mục tiêu.</div>
+              <div class="pt-2 border-t border-slate-200 flex flex-wrap items-center justify-between gap-2">
+                <span class="text-sm font-mono text-slate-600 editable">https://www.facebook.com/groups/1010922477249271</span>
+                <a href="https://www.facebook.com/groups/1010922477249271" target="_blank" class="px-3.5 py-1.5 bg-tealbrand hover:bg-tealbrand-dark text-white text-xs font-bold rounded transition">
+                  Mở Group Facebook
+                </a>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- ==========================================
-           SLIDE 3: LỘ TRÌNH HỌC (60 BUỔI - 4.5 THÁNG)
+           SLIDE 3: LỘ TRÌNH HỌC (60 BUỔI)
            ========================================== -->
       <section class="slide flex-col h-full justify-between">
-        <div class="ribbon-header w-72 md:w-96 py-2.5 px-6 text-white font-bold text-xl md:text-2xl -ml-6 md:-ml-12 mb-4 shadow">
+        <div class="slide-ribbon w-80 md:w-96 py-2.5 px-8 text-white font-bold text-2xl -ml-8 md:-ml-12 mb-6">
           <span class="editable">Orientation</span>
         </div>
 
-        <div class="my-auto space-y-6">
-          <div class="flex flex-wrap items-center justify-between gap-4 border-b pb-4">
-            <div>
-              <h3 class="text-2xl md:text-3xl font-extrabold text-slate-800 editable">
-                2. Lộ trình: 60 buổi (4.5 tháng)
-              </h3>
-              <p class="text-slate-500 mt-1 editable">Chia làm 3 giai đoạn bài bản từ xây nền tảng đến luyện đề thực chiến</p>
-            </div>
-            <div class="bg-brand/10 text-brand-dark font-bold px-4 py-2 rounded-xl text-sm editable">
-              <i class="fa-regular fa-calendar-check mr-1"></i> 3 buổi / tuần
+        <div class="my-auto space-y-6 text-xl md:text-2xl text-slate-900">
+          <div class="font-medium editable">1. Giới thiệu: Tên, trường, mục tiêu.</div>
+
+          <div class="space-y-4">
+            <div class="font-semibold editable">2. Lộ trình: 60 buổi (4.5 tháng)</div>
+            <div class="pl-6 space-y-3 text-lg md:text-xl text-slate-800 border-l-4 border-tealbrand">
+              <div class="editable">- GĐ 1 (25 buổi): Từ vựng, ngữ pháp, PP làm bài</div>
+              <div class="editable">- GĐ 2 (20 buổi): Làm đề từng phần</div>
+              <div class="editable">- GĐ 3 (15 buổi): Làm đề full test</div>
             </div>
           </div>
 
-          <!-- 3 Giai đoạn -->
-          <div class="grid md:grid-cols-3 gap-6">
-            <!-- GĐ 1 -->
-            <div class="bg-gradient-to-b from-teal-50 to-white p-6 rounded-2xl border-2 border-teal-200 shadow-sm relative">
-              <div class="w-12 h-12 rounded-xl bg-brand text-white font-black text-xl flex items-center justify-center mb-4 shadow">
-                GĐ 1
-              </div>
-              <div class="inline-block bg-teal-100 text-brand-dark text-xs font-bold px-2.5 py-1 rounded-full mb-2 editable">
-                25 BUỔI ĐẦU
-              </div>
-              <h4 class="text-xl font-bold text-slate-800 mb-2 editable">Nền tảng & Phương pháp</h4>
-              <p class="text-slate-600 text-base leading-relaxed editable">
-                Tập trung xây dựng Từ vựng, Ngữ pháp cốt lõi và Phương pháp làm bài cho từng Part.
-              </p>
-            </div>
-
-            <!-- GĐ 2 -->
-            <div class="bg-gradient-to-b from-amber-50 to-white p-6 rounded-2xl border-2 border-amber-200 shadow-sm relative">
-              <div class="w-12 h-12 rounded-xl bg-amber-500 text-white font-black text-xl flex items-center justify-center mb-4 shadow">
-                GĐ 2
-              </div>
-              <div class="inline-block bg-amber-100 text-amber-800 text-xs font-bold px-2.5 py-1 rounded-full mb-2 editable">
-                20 BUỔI TIẾP THEO
-              </div>
-              <h4 class="text-xl font-bold text-slate-800 mb-2 editable">Luyện đề từng phần</h4>
-              <p class="text-slate-600 text-base leading-relaxed editable">
-                Làm đề chuyên sâu theo từng Part (Part 1 &rarr; Part 7) để nâng cao tốc độ và độ chính xác.
-              </p>
-            </div>
-
-            <!-- GĐ 3 -->
-            <div class="bg-gradient-to-b from-rose-50 to-white p-6 rounded-2xl border-2 border-rose-200 shadow-sm relative">
-              <div class="w-12 h-12 rounded-xl bg-rose-500 text-white font-black text-xl flex items-center justify-center mb-4 shadow">
-                GĐ 3
-              </div>
-              <div class="inline-block bg-rose-100 text-rose-800 text-xs font-bold px-2.5 py-1 rounded-full mb-2 editable">
-                15 BUỔI CUỐI
-              </div>
-              <h4 class="text-xl font-bold text-slate-800 mb-2 editable">Luyện đề Full Test</h4>
-              <p class="text-slate-600 text-base leading-relaxed editable">
-                Giải đề Full Test 200 câu dưới áp lực thời gian chuẩn phòng thi, rà soát lỗi sai trước khi đi thi.
-              </p>
-            </div>
-          </div>
-
-          <div class="bg-slate-100 p-4 rounded-xl flex items-center justify-between text-slate-700">
-            <div class="flex items-center gap-3">
-              <i class="fa-brands fa-google text-xl text-brand"></i>
-              <span class="font-semibold text-base md:text-lg editable">3. Tham gia Google Classroom (bằng email cá nhân) để nhận tài liệu & nộp bài tập.</span>
-            </div>
-          </div>
+          <div class="font-medium pt-2 editable">3. Tham gia Google Classroom (email cá nhân)</div>
         </div>
       </section>
 
       <!-- ==========================================
-           SLIDE 4: QUYỀN LỢI & ĐẦU RA KHÓA HỌC
+           SLIDE 4: MỤC TIÊU ĐẦU RA
            ========================================== -->
       <section class="slide flex-col h-full justify-between">
-        <div class="ribbon-header w-72 md:w-96 py-2.5 px-6 text-white font-bold text-xl md:text-2xl -ml-6 md:-ml-12 mb-4 shadow">
-          <span class="editable">Giá trị nhận được</span>
+        <div class="slide-ribbon w-80 md:w-96 py-2.5 px-8 text-white font-bold text-2xl -ml-8 md:-ml-12 mb-6">
+          <span class="editable">Orientation</span>
         </div>
 
-        <div class="my-auto grid sm:grid-cols-2 gap-5">
-          <div class="p-6 rounded-2xl bg-teal-50/60 border border-teal-200 flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-xl bg-brand text-white flex items-center justify-center shrink-0 text-xl font-bold">1</div>
-            <div>
-              <h4 class="text-lg md:text-xl font-bold text-slate-800 editable">Khoảng 6000 từ vựng mới</h4>
-              <p class="text-slate-600 text-sm md:text-base mt-1 editable">Ghi nhớ hệ thống từ vựng sát đề thi thật nhất qua phương pháp lặp lại ngắt quãng.</p>
-            </div>
+        <div class="my-auto space-y-6 text-xl md:text-2xl text-slate-900 leading-relaxed">
+          <div class="p-4 border-l-4 border-tealbrand bg-slate-50 editable">
+            1. Nhớ được khoảng 6000 từ vựng mới
           </div>
-
-          <div class="p-6 rounded-2xl bg-amber-50/60 border border-amber-200 flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-xl bg-amber-500 text-white flex items-center justify-center shrink-0 text-xl font-bold">2</div>
-            <div>
-              <h4 class="text-lg md:text-xl font-bold text-slate-800 editable">12 ngữ pháp cốt lõi & 60+ mẹo TOEIC</h4>
-              <p class="text-slate-600 text-sm md:text-base mt-1 editable">Nắm chắc 12 chủ điểm ngữ pháp trọng tâm và hơn 60 mẹo xử lý nhanh câu hỏi bẫy.</p>
-            </div>
+          <div class="p-4 border-l-4 border-tealbrand bg-slate-50 editable">
+            2. Học/ôn tập 12 ngữ pháp cốt lõi, khoảng hơn 60 mẹo TOEIC
           </div>
-
-          <div class="p-6 rounded-2xl bg-indigo-50/60 border border-indigo-200 flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-xl bg-indigo-500 text-white flex items-center justify-center shrink-0 text-xl font-bold">3</div>
-            <div>
-              <h4 class="text-lg md:text-xl font-bold text-slate-800 editable">Khả năng nghe / phát âm tốt</h4>
-              <p class="text-slate-600 text-sm md:text-base mt-1 editable">Cải thiện phản xạ nghe hiểu tự nhiên và chuẩn hóa phát âm tiếng Anh.</p>
-            </div>
+          <div class="p-4 border-l-4 border-tealbrand bg-slate-50 editable">
+            3. Có khả năng nghe/phát âm tốt
           </div>
-
-          <div class="p-6 rounded-2xl bg-rose-50/60 border border-rose-200 flex gap-4 items-start">
-            <div class="w-12 h-12 rounded-xl bg-rose-500 text-white flex items-center justify-center shrink-0 text-xl font-bold">4</div>
-            <div>
-              <h4 class="text-lg md:text-xl font-bold text-slate-800 editable">Website TOEIC nội bộ</h4>
-              <p class="text-slate-600 text-sm md:text-base mt-1 editable">Được cấp quyền truy cập hệ thống Website luyện thi nội bộ để ôn luyện lâu dài sau này.</p>
-            </div>
+          <div class="p-4 border-l-4 border-tealbrand bg-slate-50 editable">
+            4. Website TOEIC nội bộ để luyện thi sau này
           </div>
         </div>
       </section>
@@ -370,320 +256,213 @@
            SLIDE 5: 4. NỘI QUY LỚP HỌC
            ========================================== -->
       <section class="slide flex-col h-full justify-between">
-        <div class="ribbon-header w-72 md:w-96 py-2.5 px-6 text-white font-bold text-xl md:text-2xl -ml-6 md:-ml-12 mb-4 shadow">
+        <div class="slide-ribbon w-80 md:w-96 py-2.5 px-8 text-white font-bold text-2xl -ml-8 md:-ml-12 mb-6">
           <span class="editable">4. Nội quy lớp học</span>
         </div>
 
-        <div class="my-auto grid md:grid-cols-2 gap-4">
+        <div class="my-auto space-y-5 text-lg md:text-xl text-slate-900">
           <!-- 4.1 -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-bold text-slate-800 text-base md:text-lg editable">4.1. Đi học đúng giờ</span>
-              <span class="bg-red-100 text-red-700 font-bold px-3 py-0.5 rounded-lg text-sm editable">18:30 - 20:00 (Tối 3-5-7)</span>
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="font-medium editable">4.1. Đi học đúng giờ:</span>
+              <span class="font-bold text-red-600 editable">18:30 đến 20h tối 3-5-7</span>
             </div>
-            <p class="text-slate-600 text-sm md:text-base editable">
-              &rArr; Đi học muộn từ <strong class="text-red-600">18:33 (6:33)</strong> &rArr; Đóng quỹ <strong class="text-red-600">20k</strong>.
-            </p>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="editable">=&gt; Đi học muộn</span>
+              <span class="font-bold text-red-600 editable">6:33 =&gt; 20k</span>
+            </div>
+            <div class="text-base text-slate-700 pt-1 border-t border-slate-200 editable">
+              Quỹ nhóm Momo: [Nhập thông tin tại đây]
+            </div>
           </div>
 
           <!-- 4.2 -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-bold text-slate-800 text-base md:text-lg editable">4.2. Nghỉ học phải xin phép</span>
-              <span class="bg-red-100 text-red-700 font-bold px-3 py-0.5 rounded-lg text-sm editable">Không phép &rArr; 20k</span>
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-2">
+            <div class="font-medium editable">4.2. Nghỉ học phải có xin phép:</div>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="editable">=&gt; 1 tháng nghỉ tối đa 3 buổi có phép</span>
+              <span class="font-bold text-red-600 editable">k phép =&gt; 20k</span>
             </div>
-            <p class="text-slate-600 text-sm md:text-base editable">
-              &rArr; 1 tháng nghỉ tối đa <strong>3 buổi có phép</strong>.
-            </p>
           </div>
 
-          <!-- 4.3 & 4.4 -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-bold text-slate-800 text-base md:text-lg editable">4.3. Tài liệu & 4.4. Mở Camera</span>
-              <span class="bg-red-100 text-red-700 font-bold px-3 py-0.5 rounded-lg text-sm editable">Tắt Cam &rArr; 10k</span>
+          <!-- 4.3, 4.4, 4.5 -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg space-y-3">
+            <div class="editable">4.3. Chuẩn bị tài liệu đầy đủ khi đi học</div>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="editable">4.4. Mở camera khi học:</span>
+              <span class="font-bold text-red-600 editable">10k</span>
             </div>
-            <p class="text-slate-600 text-sm md:text-base editable">
-              &rArr; Chuẩn bị tài liệu đầy đủ và luôn <strong>mở Camera</strong> trong suốt buổi học.
-            </p>
-          </div>
-
-          <!-- 4.5 -->
-          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
-            <div class="flex items-center justify-between mb-1">
-              <span class="font-bold text-slate-800 text-base md:text-lg editable">4.5. Làm bài tập đầy đủ</span>
-              <span class="bg-red-100 text-red-700 font-bold px-3 py-0.5 rounded-lg text-sm editable">Thiếu BTVN &rArr; 20k</span>
-            </div>
-            <p class="text-slate-600 text-sm md:text-base editable">
-              &rArr; Hoàn thành bài tập trước khi đến lớp (Dành <strong>2 tiếng / ngày</strong> tự học).
-            </p>
-          </div>
-
-          <!-- Quỹ nhóm Momo -->
-          <div class="md:col-span-2 bg-pink-50 border-2 border-pink-200 p-4 rounded-xl flex flex-wrap items-center justify-between gap-4">
-            <div class="flex items-center gap-3">
-              <div class="w-11 h-11 rounded-xl bg-pink-600 text-white font-black flex items-center justify-center text-sm shadow">
-                MoMo
-              </div>
-              <div>
-                <h4 class="font-bold text-pink-900 text-base md:text-lg editable">Quỹ nhóm MoMo: <span class="text-pink-600">[Nhập SĐT / Tên chủ quỹ tại đây]</span></h4>
-                <p class="text-xs md:text-sm text-pink-700 editable">Toàn bộ tiền phạt được đưa vào Quỹ nhóm để liên hoan / thưởng cuối khóa!</p>
-              </div>
+            <div class="flex flex-wrap items-center justify-between gap-2">
+              <span class="editable">4.5. Làm bài tập đầy đủ trước khi đến lớp <span class="text-slate-600">(2 tiếng / ngày)</span></span>
+              <span class="font-bold text-red-600 editable">20k</span>
             </div>
           </div>
         </div>
       </section>
 
       <!-- ==========================================
-           SLIDE 6: 5. WEBSITE HỌC TOEIC
+           SLIDE 6: 5. WEBSITE HỌC TOEIC & KAHOOT
            ========================================== -->
       <section class="slide flex-col h-full justify-between">
-        <div class="ribbon-header w-72 md:w-96 py-2.5 px-6 text-white font-bold text-xl md:text-2xl -ml-6 md:-ml-12 mb-4 shadow">
-          <span class="editable">5. Website học TOEIC</span>
+        <div class="slide-ribbon w-80 md:w-96 py-2.5 px-8 text-white font-bold text-2xl -ml-8 md:-ml-12 mb-6">
+          <span class="editable">Orientation</span>
         </div>
 
-        <div class="my-auto space-y-6">
-          <p class="text-slate-600 text-lg editable">
-            Lưu lại ngay 2 trang web luyện đề TOEIC Online miễn phí có giao diện bám sát đề thi thật:
-          </p>
+        <div class="my-auto space-y-6 text-lg md:text-xl">
+          <div class="space-y-2 text-slate-700 text-base md:text-lg">
+            <div class="editable">1. Giới thiệu: Tên, trường, mục tiêu.</div>
+            <div class="editable">2. Lộ trình: 60 buổi (4.5 tháng)</div>
+            <div class="editable">3. Tham gia Google Classroom (email cá nhân)</div>
+            <div class="editable">4. Nội quy lớp học.</div>
+          </div>
 
-          <div class="grid md:grid-cols-2 gap-6">
-            <!-- Study4 -->
-            <div class="p-6 rounded-2xl border-2 border-blue-200 bg-blue-50/40 flex flex-col justify-between gap-4 hover:shadow-md transition">
-              <div>
-                <span class="text-xs font-bold uppercase px-2.5 py-1 rounded bg-blue-100 text-blue-700 editable">Khuyên dùng #1</span>
-                <h4 class="text-2xl font-extrabold text-slate-800 mt-3 editable">STUDY4 - Luyện thi TOEIC</h4>
-                <p class="text-slate-600 text-sm mt-2 editable">Kho đề ETS đầy đủ từng Part và Full Test, có thống kê lỗi sai và từ vựng chi tiết.</p>
-                <p class="text-xs text-slate-400 mt-2 font-mono break-all">https://study4.com/tests/toeic/</p>
-              </div>
-              <a href="https://study4.com/tests/toeic/" target="_blank" class="w-full py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl text-center shadow transition">
-                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Mở trang Study4
+          <div class="p-5 bg-slate-50 border border-slate-200 rounded-lg space-y-4">
+            <div class="font-bold text-slate-900 editable">5. Website học TOEIC:</div>
+
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3 rounded border">
+              <a href="https://study4.com/tests/toeic/" target="_blank" class="text-purple-800 underline font-medium break-all">
+                https://study4.com/tests/toeic/
+              </a>
+              <a href="https://study4.com/tests/toeic/" target="_blank" class="px-3 py-1 bg-slate-800 text-white text-xs font-semibold rounded">
+                Mở link
               </a>
             </div>
 
-            <!-- Zenlish -->
-            <div class="p-6 rounded-2xl border-2 border-teal-200 bg-teal-50/40 flex flex-col justify-between gap-4 hover:shadow-md transition">
-              <div>
-                <span class="text-xs font-bold uppercase px-2.5 py-1 rounded bg-teal-100 text-teal-800 editable">Khuyên dùng #2</span>
-                <h4 class="text-2xl font-extrabold text-slate-800 mt-3 editable">Zenlish - Test Online ETS</h4>
-                <p class="text-slate-600 text-sm mt-2 editable">Luyện tập bộ đề ETS 2019 - 2024 trực tuyến với giao diện trực quan, chấm điểm ngay.</p>
-                <p class="text-xs text-slate-400 mt-2 font-mono break-all">https://zenlishtoeic.vn/test-online-new/?luyen-tap=ets-2019</p>
-              </div>
-              <a href="https://zenlishtoeic.vn/test-online-new/?luyen-tap=ets-2019" target="_blank" class="w-full py-3 bg-brand hover:bg-brand-dark text-white font-bold rounded-xl text-center shadow transition">
-                <i class="fa-solid fa-arrow-up-right-from-square mr-1"></i> Mở trang Zenlish
+            <div class="flex flex-wrap items-center justify-between gap-2 bg-white p-3 rounded border">
+              <a href="https://zenlishtoeic.vn/test-online-new/?luyen-tap=ets-2019" target="_blank" class="text-purple-800 underline font-medium break-all">
+                https://zenlishtoeic.vn/test-online-new/?luyen-tap=ets-2019
+              </a>
+              <a href="https://zenlishtoeic.vn/test-online-new/?luyen-tap=ets-2019" target="_blank" class="px-3 py-1 bg-slate-800 text-white text-xs font-semibold rounded">
+                Mở link
               </a>
             </div>
           </div>
+
+          <!-- Kahoot -->
+          <div class="p-4 bg-slate-50 border border-slate-200 rounded-lg flex flex-wrap items-center justify-between gap-3">
+            <div>
+              <div class="text-xs font-bold uppercase text-slate-400">KAHOOT</div>
+              <a href="https://create.kahoot.it/my-library/kahoots/1adff216-0276-4475-ba3f-ae1417f6e659" target="_blank" class="text-sm font-mono text-slate-700 underline break-all">
+                https://create.kahoot.it/my-library/kahoots/1adff216-0276-4475-ba3f-ae1417f6e659
+              </a>
+            </div>
+            <a href="https://create.kahoot.it/my-library/kahoots/1adff216-0276-4475-ba3f-ae1417f6e659" target="_blank" class="px-4 py-2 bg-tealbrand hover:bg-tealbrand-dark text-white text-xs font-bold rounded transition">
+              Mở Kahoot
+            </a>
+          </div>
         </div>
       </section>
 
       <!-- ==========================================
-           SLIDE 7: CẤU TRÚC BÀI THI TOEIC (120 PHÚT)
+           SLIDE 7: CẤU TRÚC ĐỀ THI (120 PHÚT)
            ========================================== -->
       <section class="slide flex-col h-full justify-between">
-        <div class="ribbon-header w-72 md:w-96 py-2.5 px-6 text-white font-bold text-xl md:text-2xl -ml-6 md:-ml-12 mb-4 shadow">
-          <span class="editable">Cấu trúc đề thi TOEIC</span>
+        <div class="slide-ribbon w-80 md:w-96 py-2.5 px-8 text-white font-bold text-2xl -ml-8 md:-ml-12 mb-6">
+          <span class="editable">Orientation</span>
         </div>
 
-        <div class="my-auto grid md:grid-cols-12 gap-6 items-center">
-          <!-- Cục tổng 120 phút -->
-          <div class="md:col-span-4 bg-brand text-white p-6 rounded-2xl text-center shadow-lg space-y-3">
-            <i class="fa-regular fa-clock text-4xl text-teal-200"></i>
-            <div class="text-4xl font-black editable">120 PHÚT</div>
-            <div class="text-sm text-teal-100 editable">Tổng thời gian làm bài (200 câu)</div>
-            <div class="pt-3 border-t border-teal-600 flex justify-around text-sm font-bold">
-              <span class="editable">Nghe: 45p</span>
-              <span>|</span>
-              <span class="editable">Đọc: 75p</span>
+        <div class="my-auto grid md:grid-cols-12 gap-6 items-center text-lg md:text-xl">
+          <!-- Cột trái -->
+          <div class="md:col-span-5 flex flex-col items-center space-y-6">
+            <div class="text-2xl font-bold text-slate-900 editable">Listening: 100 câu</div>
+            <div class="w-48 py-4 rounded-full bg-tealbrand text-white text-center font-bold text-2xl shadow-sm editable">
+              120 phút
             </div>
+            <div class="text-2xl font-bold text-slate-900 editable">Reading: 100 câu</div>
           </div>
 
-          <!-- Chi tiết 7 Parts -->
-          <div class="md:col-span-8 space-y-4">
-            <!-- Listening -->
-            <div class="bg-teal-50 border border-teal-200 p-4 rounded-2xl">
-              <div class="flex items-center justify-between mb-3">
-                <h4 class="text-lg font-extrabold text-brand-dark flex items-center gap-2">
-                  <i class="fa-solid fa-headphones"></i> <span class="editable">LISTENING: 100 CÂU</span>
-                </h4>
-                <span class="text-xs font-bold bg-brand text-white px-2.5 py-1 rounded-full editable">495 Điểm</span>
-              </div>
-              <div class="grid sm:grid-cols-2 gap-2.5 text-sm font-semibold text-slate-700">
-                <div class="bg-white p-2.5 rounded-lg border editable">P1 (Mô tả tranh): <span class="text-brand font-bold">6 câu</span></div>
-                <div class="bg-white p-2.5 rounded-lg border editable">P2 (Hỏi - Đáp): <span class="text-brand font-bold">25 câu</span></div>
-                <div class="bg-white p-2.5 rounded-lg border editable">P3 (Đoạn hội thoại): <span class="text-brand font-bold">39 câu</span></div>
-                <div class="bg-white p-2.5 rounded-lg border editable">P4 (Đoạn ghi âm): <span class="text-brand font-bold">30 câu</span></div>
-              </div>
+          <!-- Cột phải: 7 Parts -->
+          <div class="md:col-span-7 space-y-6">
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-lg space-y-2.5">
+              <div class="editable">P1 (mô tả tranh): 6 câu</div>
+              <div class="editable">P2 (câu hỏi - trả lời): 25 câu</div>
+              <div class="editable">P3 (đoạn hội thoại): 39 câu</div>
+              <div class="editable">P4 (đoạn ghi âm): 30 câu</div>
             </div>
 
-            <!-- Reading -->
-            <div class="bg-amber-50 border border-amber-200 p-4 rounded-2xl">
-              <div class="flex items-center justify-between mb-3">
-                <h4 class="text-lg font-extrabold text-amber-800 flex items-center gap-2">
-                  <i class="fa-solid fa-book-open"></i> <span class="editable">READING: 100 CÂU</span>
-                </h4>
-                <span class="text-xs font-bold bg-amber-600 text-white px-2.5 py-1 rounded-full editable">495 Điểm</span>
-              </div>
-              <div class="grid sm:grid-cols-3 gap-2.5 text-sm font-semibold text-slate-700">
-                <div class="bg-white p-2.5 rounded-lg border editable">P5 (Điền câu): <span class="text-amber-600 font-bold">30 câu</span></div>
-                <div class="bg-white p-2.5 rounded-lg border editable">P6 (Điền đoạn): <span class="text-amber-600 font-bold">16 câu</span></div>
-                <div class="bg-white p-2.5 rounded-lg border editable">P7 (Đọc hiểu): <span class="text-amber-600 font-bold">54 câu</span></div>
-              </div>
+            <div class="p-5 bg-slate-50 border border-slate-200 rounded-lg space-y-2.5">
+              <div class="editable">P5 (hoàn thành câu): 30 câu</div>
+              <div class="editable">P6 (hoàn thành đoạn): 16 câu</div>
+              <div class="editable">P7 (đọc hiểu): 54 câu</div>
             </div>
           </div>
         </div>
       </section>
 
       <!-- ==========================================
-           SLIDE 8: THANG ĐIỂM TOEIC (TƯƠNG TÁC)
+           SLIDE 8: THANG ĐIỂM LISTENING & READING
            ========================================== -->
       <section class="slide flex-col h-full justify-between">
-        <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
-          <div class="ribbon-header w-72 md:w-80 py-2 px-6 text-white font-bold text-xl -ml-6 md:-ml-12 shadow">
-            <span class="editable">Thang điểm TOEIC</span>
+        <!-- Thanh tính nhanh trên đầu bảng -->
+        <div class="flex flex-wrap items-center justify-between gap-2 pb-2 mb-2 border-b border-slate-200">
+          <div class="text-xs text-slate-500 font-medium">
+            * Bấm trực tiếp vào số câu trong bảng để cộng điểm nhanh:
           </div>
-          <div class="flex gap-2">
-            <button onclick="setScorePreset(68, 61)" class="text-xs bg-red-100 hover:bg-red-200 text-red-700 font-bold px-3 py-1.5 rounded-lg border border-red-300 transition">
-              🎯 Mốc chuẩn trên Slide (68 Nghe + 61 Đọc = 650đ)
-            </button>
-            <button onclick="toggleFullTable()" class="text-xs bg-slate-800 hover:bg-slate-900 text-white font-bold px-3 py-1.5 rounded-lg transition">
-              <i class="fa-solid fa-table mr-1"></i> Xem bảng 100 câu
-            </button>
+          <div class="flex items-center gap-3 text-xs md:text-sm font-bold bg-slate-100 px-3 py-1 rounded border">
+            <span>Listening: <strong id="calc-l-c" class="text-tealbrand-dark">68</strong> câu (<strong id="calc-l-s" class="text-red-600">350</strong>đ)</span>
+            <span>+</span>
+            <span>Reading: <strong id="calc-r-c" class="text-tealbrand-dark">61</strong> câu (<strong id="calc-r-s" class="text-red-600">300</strong>đ)</span>
+            <span>=</span>
+            <span class="bg-slate-900 text-white px-2 py-0.5 rounded">Tổng: <strong id="calc-total" class="text-amber-400">650</strong> điểm</span>
           </div>
         </div>
 
-        <!-- Bộ tính điểm tương tác -->
-        <div class="my-auto grid md:grid-cols-12 gap-6 items-center">
-          <div class="md:col-span-7 space-y-5">
-            <!-- Thanh kéo Listening -->
-            <div class="bg-teal-50 p-5 rounded-2xl border border-teal-200">
-              <div class="flex justify-between items-center mb-2">
-                <span class="font-bold text-slate-800"><i class="fa-solid fa-headphones text-brand mr-1"></i> Số câu đúng LISTENING:</span>
-                <span class="text-lg font-extrabold text-brand-dark"><span id="l-correct">68</span> / 100 câu &rArr; <span id="l-score" class="text-2xl text-red-600">350</span> điểm</span>
-              </div>
-              <input id="l-slider" type="range" min="0" max="100" value="68" oninput="updateScore()" class="w-full h-3 bg-teal-200 rounded-lg appearance-none cursor-pointer accent-brand" />
-            </div>
-
-            <!-- Thanh kéo Reading -->
-            <div class="bg-amber-50 p-5 rounded-2xl border border-amber-200">
-              <div class="flex justify-between items-center mb-2">
-                <span class="font-bold text-slate-800"><i class="fa-solid fa-book-open text-amber-600 mr-1"></i> Số câu đúng READING:</span>
-                <span class="text-lg font-extrabold text-amber-800"><span id="r-correct">61</span> / 100 câu &rArr; <span id="r-score" class="text-2xl text-red-600">300</span> điểm</span>
-              </div>
-              <input id="r-slider" type="range" min="0" max="100" value="61" oninput="updateScore()" class="w-full h-3 bg-amber-200 rounded-lg appearance-none cursor-pointer accent-amber-600" />
-            </div>
-
-            <!-- 2 Lưu ý vàng từ Slide -->
-            <div class="grid sm:grid-cols-2 gap-3">
-              <div class="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 font-bold text-sm md:text-base flex items-center gap-2">
-                <i class="fa-solid fa-arrow-trend-up"></i>
-                <span class="editable">&rArr; Đúng 1 câu tăng ~5 điểm</span>
-              </div>
-              <div class="p-3 bg-red-50 border border-red-200 rounded-xl text-red-700 font-bold text-sm md:text-base flex items-center gap-2">
-                <i class="fa-solid fa-triangle-exclamation"></i>
-                <span class="editable">&rArr; Không được bỏ sót câu nào!</span>
-              </div>
-            </div>
+        <!-- 2 Bảng điểm đầy đủ giống hệt Slide gốc -->
+        <div class="grid md:grid-cols-2 gap-4 my-auto">
+          <div>
+            <h3 class="text-center font-extrabold text-red-600 text-base mb-1 editable">THANG ĐIỂM LISTENING</h3>
+            <div id="table-listening"></div>
           </div>
-
-          <!-- Tổng điểm -->
-          <div class="md:col-span-5 bg-gradient-to-br from-slate-800 to-slate-900 text-white p-6 rounded-2xl text-center shadow-xl">
-            <div class="text-xs font-bold uppercase tracking-widest text-teal-300 editable">TỔNG ĐIỂM ƯỚC TÍNH</div>
-            <div id="total-score" class="text-6xl md:text-7xl font-black text-amber-400 my-3">650</div>
-            <div class="text-sm text-slate-300 editable">Trên tổng điểm tối đa 990</div>
-            <div class="mt-5 pt-4 border-t border-slate-700 flex justify-center gap-2">
-              <button onclick="setScorePreset(49, 51)" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded text-xs">Mốc 500đ</button>
-              <button onclick="setScorePreset(68, 61)" class="px-3 py-1 bg-brand hover:bg-brand-dark rounded text-xs font-bold">Mốc 650đ</button>
-              <button onclick="setScorePreset(80, 78)" class="px-3 py-1 bg-slate-700 hover:bg-slate-600 rounded text-xs">Mốc 800đ</button>
-            </div>
+          <div>
+            <h3 class="text-center font-extrabold text-red-600 text-base mb-1 editable">THANG ĐIỂM READING</h3>
+            <div id="table-reading"></div>
           </div>
+        </div>
+
+        <!-- Ghi chú dưới đáy -->
+        <div class="pt-3 mt-2 flex flex-wrap items-center justify-around text-lg md:text-xl font-bold text-red-700">
+          <div class="editable">=&gt; đúng 1 câu tăng 5 điểm</div>
+          <div class="editable">=&gt; không được bỏ sót câu nào</div>
         </div>
       </section>
 
-      <!-- ==========================================
-           SLIDE 9: CHƠI GAME KAHOOT!
-           ========================================== -->
-      <section class="slide flex-col items-center justify-center text-center h-full my-auto py-8">
-        <div class="w-20 h-20 rounded-2xl bg-purple-600 text-white flex items-center justify-center text-4xl shadow-lg mb-4 animate-bounce">
-          <i class="fa-solid fa-gamepad"></i>
-        </div>
-        <h2 class="text-3xl md:text-5xl font-extrabold text-slate-800 mb-3 editable">
-          MINI GAME: KAHOOT!
-        </h2>
-        <p class="text-slate-600 max-w-lg text-base md:text-lg mb-8 editable">
-          Cùng kiểm tra nhanh mức độ nhớ bài Orientation hôm nay qua trò chơi Kahoot nhé!
-        </p>
-
-        <a href="https://create.kahoot.it/my-library/kahoots/1adff216-0276-4475-ba3f-ae1417f6e659" target="_blank" class="bg-purple-600 hover:bg-purple-700 text-white font-extrabold text-xl px-8 py-4 rounded-2xl shadow-lg hover:scale-105 transition flex items-center gap-3">
-          <i class="fa-solid fa-play"></i> <span>MỞ KAHOOT NGAY</span>
-        </a>
-        <p class="text-xs text-slate-400 mt-4 font-mono editable">
-          https://create.kahoot.it/my-library/kahoots/1adff216-0276-4475-ba3f-ae1417f6e659
-        </p>
-      </section>
-
-      <!-- Chân trang bên trong Slide -->
-      <div class="pt-4 mt-4 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
-        <span class="editable">PH Windy TOEIC - Lê Hồng Thịnh (990 TOEIC / 8.0 IELTS)</span>
-        <span id="slide-counter" class="font-bold text-slate-600">Trang 1 / 9</span>
+      <!-- Footer nhỏ trong Slide -->
+      <div class="pt-3 mt-3 border-t border-slate-100 flex items-center justify-between text-xs text-slate-400">
+        <span>PH Windy TOEIC</span>
+        <span id="slide-counter" class="font-semibold text-slate-600">1 / 8</span>
       </div>
 
     </div>
   </main>
 
-  <!-- THANH ĐIỀU KHIỂN DƯỚI CÙNG (Dành cho Giáo viên) -->
-  <footer class="max-w-6xl w-full mx-auto mt-3 flex flex-wrap items-center justify-between gap-2 bg-white/90 backdrop-blur px-4 py-2.5 rounded-xl shadow-sm">
-    <!-- Nút lùi / tiến slide -->
+  <!-- THANH CÔNG CỤ DƯỚI CÙNG -->
+  <footer class="max-w-6xl w-full mx-auto mt-2.5 flex flex-wrap items-center justify-between gap-2 bg-white px-4 py-2 rounded-lg shadow-sm border border-slate-200 text-xs">
     <div class="flex items-center gap-2">
-      <button onclick="prevSlide()" class="px-4 py-2 rounded-lg bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold text-sm transition">
-        <i class="fa-solid fa-chevron-left mr-1"></i> Trước
+      <button onclick="prevSlide()" class="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold border transition">
+        &larr; Trang trước
       </button>
-      <button onclick="nextSlide()" class="px-4 py-2 rounded-lg bg-brand hover:bg-brand-dark text-white font-bold text-sm transition">
-        Tiếp theo <i class="fa-solid fa-chevron-right ml-1"></i>
+      <button onclick="nextSlide()" class="px-3 py-1.5 rounded bg-tealbrand hover:bg-tealbrand-dark text-white font-semibold transition">
+        Trang tiếp &rarr;
       </button>
-      <span class="hidden lg:inline-block text-xs text-slate-500 ml-2">
-        (Dùng phím mũi tên ⬅️ ➡️ để chuyển trang)
-      </span>
     </div>
 
-    <!-- Công cụ giảng dạy & Chỉnh sửa -->
     <div class="flex flex-wrap items-center gap-2">
-      <button id="laser-btn" onclick="toggleLaser()" class="px-3 py-2 rounded-lg bg-slate-100 hover:bg-red-50 text-slate-700 font-semibold text-xs border transition">
-        🔴 Bút Laser (Phím L)
+      <button id="laser-btn" onclick="toggleLaser()" class="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold border transition">
+        Con trỏ Laser (Phím L)
       </button>
-
-      <button id="edit-btn" onclick="toggleEditMode()" class="px-3 py-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs border border-amber-300 transition">
-        ✏️ Bật chế độ Sửa chữ
+      <button id="edit-btn" onclick="toggleEditMode()" class="px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold border transition">
+        Sửa nội dung chữ
       </button>
-
-      <button id="save-btn" onclick="downloadUpdatedHTML()" class="hidden px-3 py-2 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs shadow transition">
-        💾 Tải file HTML đã lưu
+      <button id="save-btn" onclick="downloadUpdatedHTML()" class="hidden px-3 py-1.5 rounded bg-sky-700 hover:bg-sky-800 text-white font-semibold transition">
+        Tải file HTML đã lưu
       </button>
-
-      <button onclick="toggleFullScreen()" class="px-3 py-2 rounded-lg bg-slate-800 hover:bg-slate-900 text-white font-semibold text-xs transition">
-        <i class="fa-solid fa-expand mr-1"></i> Toàn màn hình
+      <button onclick="toggleFullScreen()" class="px-3 py-1.5 rounded bg-slate-800 hover:bg-slate-900 text-white font-semibold transition">
+        Toàn màn hình
       </button>
     </div>
   </footer>
 
-  <!-- MODAL BẢNG ĐIỂM 100 CÂU CHI TIẾT -->
-  <div id="score-modal" class="fixed inset-0 bg-black/60 z-50 hidden items-center justify-center p-4">
-    <div class="bg-white rounded-2xl max-w-5xl w-full max-h-[85vh] flex flex-col overflow-hidden shadow-2xl">
-      <div class="p-4 bg-brand text-white flex items-center justify-between">
-        <h3 class="font-bold text-lg">Bảng Quy Đổi Điểm TOEIC Chi Tiết (0 - 100 câu)</h3>
-        <button onclick="toggleFullTable()" class="w-8 h-8 rounded-lg bg-white/20 hover:bg-white/30 flex items-center justify-center">
-          <i class="fa-solid fa-xmark"></i>
-        </button>
-      </div>
-      <div class="p-4 overflow-y-auto grid md:grid-cols-2 gap-6 text-xs" id="full-table-container">
-        <!-- Tự động render bằng JS -->
-      </div>
-    </div>
-  </div>
-
-  <!-- JAVASCRIPT XỬ LÝ TRÌNH CHIẾU, TÍNH ĐIỂM & CHỈNH SỬA -->
   <script>
-    // 1. Dữ liệu bảng điểm chuẩn từ Slide của bạn
     const listeningScores = [5,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185,190,195,200,205,210,215,220,225,230,235,240,245,250,255,260,265,270,275,280,285,290,295,300,305,310,315,320,325,330,335,340,345,350,355,360,365,370,375,380,385,395,400,405,410,415,420,425,430,435,440,445,450,455,460,465,470,475,480,485,490,495,495,495,495,495];
     const readingScores = [5,5,5,10,15,20,25,30,35,40,45,50,55,60,65,70,75,80,85,90,95,100,105,110,115,120,125,130,135,140,145,150,155,160,165,170,175,180,185,190,195,200,205,210,215,220,225,230,235,240,245,250,255,260,265,270,275,280,285,290,295,300,305,310,315,320,325,330,335,340,345,350,355,360,365,370,375,380,385,390,395,400,405,410,415,420,425,430,435,440,445,450,455,460,465,470,475,480,485,490,495];
 
@@ -692,111 +471,132 @@
     const navBtns = document.querySelectorAll('.nav-btn');
     let isEditMode = false;
     let isLaserOn = false;
+    let selectedL = 68;
+    let selectedR = 61;
 
-    // 2. Điều hướng Slide
     function updateSlideView() {
-      slides.forEach((s, idx) => {
-        s.classList.toggle('active', idx === currentSlide);
-      });
+      slides.forEach((s, idx) => s.classList.toggle('active', idx === currentSlide));
       navBtns.forEach((btn, idx) => {
-        if (idx === currentSlide) {
-          btn.className = 'nav-btn px-2.5 py-1.5 rounded-lg transition bg-brand text-white font-bold shadow-sm';
-        } else {
-          btn.className = 'nav-btn px-2.5 py-1.5 rounded-lg transition text-slate-600 hover:bg-slate-100';
-        }
+        btn.className = idx === currentSlide
+          ? 'nav-btn px-2.5 py-1 rounded transition bg-tealbrand text-white font-bold'
+          : 'nav-btn px-2.5 py-1 rounded transition text-slate-600 hover:bg-slate-100';
       });
-      document.getElementById('slide-counter').innerText = `Trang ${currentSlide + 1} / ${slides.length}`;
+      document.getElementById('slide-counter').innerText = `${currentSlide + 1} / ${slides.length}`;
     }
 
-    function goToSlide(index) {
-      currentSlide = index;
-      updateSlideView();
-    }
+    function goToSlide(idx) { currentSlide = idx; updateSlideView(); }
+    function nextSlide() { if (currentSlide < slides.length - 1) { currentSlide++; updateSlideView(); } }
+    function prevSlide() { if (currentSlide > 0) { currentSlide--; updateSlideView(); } }
 
-    function nextSlide() {
-      if (currentSlide < slides.length - 1) {
-        currentSlide++;
-        updateSlideView();
-      }
-    }
-
-    function prevSlide() {
-      if (currentSlide > 0) {
-        currentSlide--;
-        updateSlideView();
-      }
-    }
-
-    // Phím tắt bàn phím (Tắt khi đang gõ sửa chữ)
     document.addEventListener('keydown', (e) => {
       if (isEditMode) return;
-      if (e.key === 'ArrowRight' || e.key === ' ') {
-        e.preventDefault();
-        nextSlide();
-      } else if (e.key === 'ArrowLeft') {
-        e.preventDefault();
-        prevSlide();
-      } else if (e.key.toLowerCase() === 'l') {
-        toggleLaser();
-      }
+      if (e.key === 'ArrowRight') nextSlide();
+      else if (e.key === 'ArrowLeft') prevSlide();
+      else if (e.key.toLowerCase() === 'l') toggleLaser();
     });
 
-    // 3. Xử lý tính điểm TOEIC
-    function updateScore() {
-      const lCorrect = parseInt(document.getElementById('l-slider').value, 10);
-      const rCorrect = parseInt(document.getElementById('r-slider').value, 10);
-      const lScore = listeningScores[lCorrect];
-      const rScore = readingScores[rCorrect];
+    // Dựng bảng điểm 4 cột chuẩn như ảnh gốc
+    function renderScoreTable(containerId, scoresArray, highlightNum, type) {
+      let html = `<table class="w-full score-table border-collapse">
+        <thead>
+          <tr class="bg-slate-100 text-slate-700">
+            <th>Câu</th><th>Điểm</th>
+            <th>Câu</th><th>Điểm</th>
+            <th>Câu</th><th>Điểm</th>
+            <th>Câu</th><th>Điểm</th>
+          </tr>
+        </thead><tbody>`;
 
-      document.getElementById('l-correct').innerText = lCorrect;
-      document.getElementById('r-correct').innerText = rCorrect;
-      document.getElementById('l-score').innerText = lScore;
-      document.getElementById('r-score').innerText = rScore;
-      document.getElementById('total-score').innerText = lScore + rScore;
-    }
-
-    function setScorePreset(l, r) {
-      document.getElementById('l-slider').value = l;
-      document.getElementById('r-slider').value = r;
-      updateScore();
-    }
-
-    function toggleFullTable() {
-      const modal = document.getElementById('score-modal');
-      modal.classList.toggle('hidden');
-      modal.classList.toggle('flex');
-    }
-
-    // Tạo bảng điểm đầy đủ trong Modal
-    function buildFullScoreTable() {
-      const container = document.getElementById('full-table-container');
-      let html = '';
-      [
-        { title: 'THANG ĐIỂM LISTENING', data: listeningScores, highlight: 68, color: 'teal' },
-        { title: 'THANG ĐIỂM READING', data: readingScores, highlight: 61, color: 'amber' }
-      ].forEach(section => {
-        html += `<div><h4 class="font-extrabold text-sm mb-2 text-center text-slate-800">${section.title}</h4>`;
-        html += `<div class="grid grid-cols-4 gap-1 border p-2 rounded-xl bg-slate-50">`;
-        for (let i = 0; i <= 100; i++) {
-          const isHl = i === section.highlight;
-          html += `<div class="flex justify-between px-2 py-1 rounded ${isHl ? 'bg-red-600 text-white font-bold' : 'bg-white border'}">
-            <span>${i} câu:</span>
-            <span class="font-bold">${section.data[i]}</span>
-          </div>`;
+      for (let row = 0; row < 25; row++) {
+        html += `<tr>`;
+        for (let col = 0; col < 4; col++) {
+          const q = row + col * 25;
+          const sc = scoresArray[q];
+          const isHl = q === highlightNum;
+          const cellStyle = isHl
+            ? 'border-2 border-red-600 bg-red-50 text-red-700 font-extrabold'
+            : 'bg-sky-50/40';
+          html += `
+            <td onclick="selectScore('${type}', ${q})" class="score-row font-semibold ${cellStyle}">${q}</td>
+            <td onclick="selectScore('${type}', ${q})" class="score-row ${cellStyle}">${sc}</td>
+          `;
         }
-        html += `</div></div>`;
-      });
-      container.innerHTML = html;
+        html += `</tr>`;
+      }
+      // Hàng cuối cho câu 100
+      html += `<tr>
+        <td colspan="6" class="border-none bg-white"></td>
+        <td onclick="selectScore('${type}', 100)" class="score-row font-semibold bg-sky-50/40">100</td>
+        <td onclick="selectScore('${type}', 100)" class="score-row bg-sky-50/40">${scoresArray[100]}</td>
+      </tr></tbody></table>`;
+
+      document.getElementById(containerId).innerHTML = html;
     }
 
-    // 4. Bút Laser
+    function selectScore(type, q) {
+      if (type === 'L') selectedL = q;
+      if (type === 'R') selectedR = q;
+      const lScore = listeningScores[selectedL];
+      const rScore = readingScores[selectedR];
+      document.getElementById('calc-l-c').innerText = selectedL;
+      document.getElementById('calc-l-s').innerText = lScore;
+      document.getElementById('calc-r-c').innerText = selectedR;
+      document.getElementById('calc-r-s').innerText = rScore;
+      document.getElementById('calc-total').innerText = lScore + rScore;
+      renderScoreTable('table-listening', listeningScores, selectedL, 'L');
+      renderScoreTable('table-reading', readingScores, selectedR, 'R');
+    }
+
+    // Xử lý nạp ảnh Giảng viên & tự lưu vào trình duyệt
+    function handleTeacherImage(event) {
+      const file = event.target.files[0];
+      if (!file) return;
+      const reader = new FileReader();
+      reader.onload = function(e) {
+        const img = new Image();
+        img.onload = function() {
+          const canvas = document.createElement('canvas');
+          const maxW = 900;
+          let w = img.width, h = img.height;
+          if (w > maxW) { h *= maxW / w; w = maxW; }
+          canvas.width = w; canvas.height = h;
+          canvas.getContext('2d').drawImage(img, 0, 0, w, h);
+          const dataUrl = canvas.toDataURL('image/jpeg', 0.85);
+          applyAvatar(dataUrl);
+          try { localStorage.setItem('ph_windy_avatar', dataUrl); } catch(err) {}
+        };
+        img.src = e.target.result;
+      };
+      reader.readAsDataURL(file);
+    }
+
+    function applyAvatar(dataUrl) {
+      const avatarImg = document.getElementById('teacher-avatar');
+      const placeholder = document.getElementById('avatar-placeholder');
+      avatarImg.src = dataUrl;
+      avatarImg.classList.remove('hidden');
+      placeholder.classList.add('hidden');
+    }
+
+    function setCropMode(mode) {
+      const avatarImg = document.getElementById('teacher-avatar');
+      if (mode === 'portrait') {
+        avatarImg.className = 'w-full h-full object-cover';
+        avatarImg.style.objectPosition = '20% 35%';
+      } else {
+        avatarImg.className = 'w-full h-full object-contain bg-white';
+        avatarImg.style.objectPosition = 'center';
+      }
+    }
+
+    // Bút Laser
     function toggleLaser() {
       isLaserOn = !isLaserOn;
-      const dot = document.getElementById('laser-dot');
+      document.getElementById('laser-dot').style.display = isLaserOn ? 'block' : 'none';
       const btn = document.getElementById('laser-btn');
-      dot.style.display = isLaserOn ? 'block' : 'none';
-      btn.classList.toggle('bg-red-600', isLaserOn);
-      btn.classList.toggle('text-white', isLaserOn);
+      btn.className = isLaserOn
+        ? 'px-3 py-1.5 rounded bg-red-600 text-white font-semibold border transition'
+        : 'px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold border transition';
     }
 
     document.addEventListener('mousemove', (e) => {
@@ -806,90 +606,51 @@
       dot.style.top = e.clientY + 'px';
     });
 
-    // 5. Toàn màn hình
-    function toggleFullScreen() {
-      if (!document.fullscreenElement) {
-        document.documentElement.requestFullscreen();
-      } else {
-        document.exitFullscreen();
-      }
-    }
-
-    // 6. CHẾ ĐỘ SỬA CHỮ & ĐỔI ẢNH TRỰC TIẾP TRÊN WEB
+    // Chế độ Sửa chữ
     function toggleEditMode() {
       isEditMode = !isEditMode;
       document.body.classList.toggle('edit-mode', isEditMode);
-      const editables = document.querySelectorAll('.editable');
-      const editBtn = document.getElementById('edit-btn');
-      const saveBtn = document.getElementById('save-btn');
-      const editOverlays = document.querySelectorAll('.edit-only');
-
-      editables.forEach(el => {
+      document.querySelectorAll('.editable').forEach(el => {
         el.contentEditable = isEditMode ? 'true' : 'false';
       });
-
-      editOverlays.forEach(el => {
-        el.classList.toggle('hidden', !isEditMode);
-        el.classList.toggle('flex', isEditMode);
-      });
-
+      const editBtn = document.getElementById('edit-btn');
+      const saveBtn = document.getElementById('save-btn');
       if (isEditMode) {
-        editBtn.innerHTML = '✅ Đang bật Sửa (Bấm vào chữ để gõ)';
-        editBtn.className = 'px-3 py-2 rounded-lg bg-orange-600 text-white font-bold text-xs shadow transition';
+        editBtn.innerText = 'Đang bật Sửa (Bấm để tắt)';
+        editBtn.className = 'px-3 py-1.5 rounded bg-amber-600 text-white font-semibold transition';
         saveBtn.classList.remove('hidden');
       } else {
-        editBtn.innerHTML = '✏️ Bật chế độ Sửa chữ';
-        editBtn.className = 'px-3 py-2 rounded-lg bg-amber-100 hover:bg-amber-200 text-amber-900 font-bold text-xs border border-amber-300 transition';
+        editBtn.innerText = 'Sửa nội dung chữ';
+        editBtn.className = 'px-3 py-1.5 rounded bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold border transition';
       }
     }
 
-    // Đổi ảnh từ máy tính và nén thành Base64 lưu thẳng vào file HTML
-    function changeImage(event, imgId) {
-      const file = event.target.files[0];
-      if (!file) return;
-      const reader = new FileReader();
-      reader.onload = function(e) {
-        const img = new Image();
-        img.onload = function() {
-          const canvas = document.createElement('canvas');
-          const maxSize = 500;
-          let width = img.width;
-          let height = img.height;
-          if (width > height && width > maxSize) {
-            height *= maxSize / width;
-            width = maxSize;
-          } else if (height > maxSize) {
-            width *= maxSize / height;
-            height = maxSize;
-          }
-          canvas.width = width;
-          canvas.height = height;
-          const ctx = canvas.getContext('2d');
-          ctx.drawImage(img, 0, 0, width, height);
-          document.getElementById(imgId).src = canvas.toDataURL('image/jpeg', 0.85);
-        };
-        img.src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-    }
-
-    // Tải xuống file index.html mới sau khi đã sửa nội dung
     function downloadUpdatedHTML() {
-      if (isEditMode) toggleEditMode(); // Tắt viền sửa trước khi xuất file
-      goToSlide(0); // Đưa về slide 1 mặc định
+      if (isEditMode) toggleEditMode();
+      goToSlide(0);
       const htmlContent = '<!DOCTYPE html>\n' + document.documentElement.outerHTML;
       const blob = new Blob([htmlContent], { type: 'text/html;charset=utf-8' });
-      const url = URL.createObjectURL(blob);
       const a = document.createElement('a');
-      a.href = url;
+      a.href = URL.createObjectURL(blob);
       a.download = 'index.html';
       a.click();
-      URL.revokeObjectURL(url);
     }
 
-    // Khởi chạy
-    updateSlideView();
-    buildFullScoreTable();
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) document.documentElement.requestFullscreen();
+      else document.exitFullscreen();
+    }
+
+    // Khởi tạo
+    window.addEventListener('DOMContentLoaded', () => {
+      updateSlideView();
+      renderScoreTable('table-listening', listeningScores, 68, 'L');
+      renderScoreTable('table-reading', readingScores, 61, 'R');
+      const savedAvatar = localStorage.getItem('ph_windy_avatar');
+      if (savedAvatar && savedAvatar.startsWith('data:image')) {
+        applyAvatar(savedAvatar);
+      }
+    });
   </script>
 </body>
 </html>
